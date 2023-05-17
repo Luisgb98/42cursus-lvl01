@@ -1,0 +1,81 @@
+ssh lguisado@192.168.56.1 -p 4242
+
+-- CENTOS VS DEBIAN --
+
+CentOS y Debian utilizan diferentes formato de paquetes, CentOS utiliza YUM/DNF y Debian en este caso utiliza dpkg/APT, yo había utilizado ya apt por lo que fue un punto de ventaja.
+
+A la hora de las actualizaciones, Debian se mantiene con una actualización principal cada 2 o 3 años, mientras que CentOS tiene versiones menores pero no admite versiones principales, por lo que Debian es más estable.
+
+En cuanto a la dificultad, CentOS esta dirigido más a empresas y Debian al usuario común, por lo que resulta más fácil configurar Debian que CentOS al nivel de consola, si hablamos de interfaz gráfica, CentOS es mucho más fácil y orientativo. En nuestro caso, no podemos utilizar interfaz gráfica por lo que es mejor usar Debian.
+
+Debian tiene mejor mantenimiento gracias a apt-get y al poco consumo de disco duro al no instalar paquetes que no se usarán jamás.
+
+-- SELINUX --
+
+SELinux utiliza políticas de seguridad que define los controles de acceso para las aplicaciones, los procesos y los archivos dentro del sistema.
+
+-- APPARMOR --
+
+Es otro sistema de control obligatorio de aceso basado en la interfaz LSM (Linux Security Modules). Viene integrado en el sistema.
+
+-- APTITUDE --
+
+Aptitude es una interfaz para APT, muestra una lista de paquetes de software y te permite de manera interactiva cuales deseas instalar o eliminar.
+
+-- APT --
+
+Es un set de herramientas del nucleo de Debian que te permite instalar, eliminar y mantener aplicaciones, existen más de 25 mil paquetes disponibles. Este busca los paquetes solicitados y trabaja con dpkg, que es otra herramienta para manejar paquetes más dirigida al sistema, que viene con el propio Debian.
+
+-- SSH --
+
+Nombre del protocolo y del programa cuya principal función es el acceso remoto a un servidor por medio de un canal seguro donde toda la información es cifrada, incluso permite copiar datos de forma segura.
+
+-- UFW --
+
+UFW se utiliza para estableces reglas de iptables, las tablas de firewall nativas, al tener una sintaxis relativamente compleja, se utiliza UFW que facilita la vida al usuario.
+
+-- SUBJECT --
+
+sudo ufw status -- Comprobamos el firewall UFW.
+cd etc/sudoers.d/ -- Carpeta donde se encuentra el archivo config de la password.
+getent group sudo -- Vemos que usuario hay en el grupo sudo.
+sudo adduser nombre -- Crea un usuario.
+sudo adduser nombre grupo -- Añade un usuario a un grupo.
+cd etc/ -- Vamos a la carpeta dónde tenemos el archivo login.defs para la strong password.
+Instalamos "libpam-pwquality" para añadirle más seguridad a las password.
+cd /etc/pam.d/ -- Vamos a la carpeta donde tenemos el archivo common-passworld.
+cd /var/log/sudo/ -- Vemos los logs del sudo.
+hostname nombre -- Cambiamos el nombre de la máquina.
+passwd -- Cambiamos la password del usuario.
+
+-- COMANDOS --
+dpkg -l | grep ssh -- Comprobamos que ssh esta instalado.
+sudo systemctl status ssh -- Comprobamos el estado de ssh.
+sudo ufw allow 4242 -- Permitimos el puerto 4242 en el firewall.
+sudo ufw delete allow 4242 -- Eliminamos la regla anterior.
+sudo change -l nombre -- Comprueba cuando tienes que cambiar la contraseña.
+sudo addgroup user42 -- Crea el grupo user42.
+sudo crontab -u root -e -- Cambia el tiempo en el que se ejecuta el script.
+sudo passwd user -- Cambiamos la contraseña.
+sudo hostnamectl set-hostname <new_hostname> -- Cambiamos el hostname.
+hostnamectl status -- Vemos el estado de la máquina y el hostname.
+http://127.0.0.1:8080 -- Vemos el wordpress.
+systemctl status fail2ban.service -- Vemos el servicio fail2ban.
+
+-- USUARIOS --
+useradd -- Crea un nuevo usuario.
+usermod -- Cambia los parámetros del usuario: -l para el username, -c para el nombre al completo, -g para los grupos.
+userdel -r -- elimina a un usuario.
+id -u -- muestra el ID.
+users -- muestra todos los usuarios logueados.
+cat /etc/passwd | cut -d ":" -f 1 -- muestra a todos los usuarios de la máquina.
+cat /etc/passwd | awk -F '{print $1}' -- muestra a todos los usuarios de la máquina.
+
+-- GRUPOS --
+groupadd -- crea un nuevo grupo.
+gpasswd -a -- añade un usuario a un grupo.
+gpasswd -d -- elimina a un usuario de un grupo.
+groupdel -- elimina un grupo.
+groups -- muestra todos los grupos de un usuario.
+id -g -- muestra el id del grupo principal de un usuario.
+getent group -- muestra todos los usuarios de un grupo.
